@@ -36,12 +36,12 @@ namespace Morpeh.Utils
             Selection.activeObject = asset;
             return asset;
         }
-        public static List<Type> FindClasses<T>()
+        public static List<Type> FindClasses<T>() 
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                      .SelectMany(assembly => assembly.GetTypes())
-                     .Where(type => type.IsSubclassOf(typeof(T)))
-                     .ToList();
+                     .Where(type =>!type.IsAbstract && type.IsSubclassOf(typeof(T)))
+                     .ToList();  
         }
         public static List<T> FindAssetsByType<T>() where T : UnityEngine.Object
         {
