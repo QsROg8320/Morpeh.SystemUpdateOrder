@@ -102,7 +102,7 @@ namespace Morpeh
             {
                 var updateBefors = node.Type.GetCustomAttributes(
                     typeof(UpdateBeforeAttribute), true
-                ).OfType < UpdateAfterAttribute>();
+                ).OfType < UpdateBeforeAttribute>();
                 foreach(var updateBefore in updateBefors)
                 {
                     if (!nodesDic.ContainsKey(updateBefore.Type))
