@@ -21,7 +21,7 @@ Copy the repository files to your project
 	}
 	```
 
- - Right click in hierarchy window and select `ECS/InstallerWithOrdering`.
+ - Right click in hierarchy window and select `ECS/InstallerWithSorting`.
 
 	> If  the checkbox `Include All Systems By Default` is checked, all
 	> systems in the assembly would be added to the list. If  the checkbox

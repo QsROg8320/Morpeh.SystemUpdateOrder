@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Scellecs.Morpeh
 {
-    public sealed class InstallerWithOrdering : Installer
+    public sealed class InstallerWithSorting : Installer
     {
         [SerializeField]
         private bool _includeAllSystemsByDefault = true;
@@ -44,11 +44,11 @@ namespace Scellecs.Morpeh
         }
         #if UNITY_EDITOR
 
-            [MenuItem("GameObject/ECS/InstallerWithOrdering", false, 1)]
+            [MenuItem("GameObject/ECS/InstallerWithSorting", false, 1)]
             private static void CreateInstaller(MenuCommand menuCommand)
             {
                 var go = new GameObject("[Installer]");
-                go.AddComponent<InstallerWithOrdering>();
+                go.AddComponent<InstallerWithSorting>();
                 GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
                 Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
                 Selection.activeObject = go;
