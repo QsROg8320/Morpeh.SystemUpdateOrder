@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morpeh.Utils
+namespace Scellecs.Morpeh.Utils
 {
-    public static class TopologicalSorter
+    internal static class TopologicalSorter
     {
         public static IEnumerable<T> Sort<T>(Graph<T> graph) 
         {            
@@ -26,7 +26,7 @@ namespace Morpeh.Utils
 
 
                 if (graph.GetConnectedNodes(node).Any(x => x.State == State.Processed))
-                      throw new Exception("Cyclic dependencies have been found");
+                      throw new Exception("Cyclic dependencies have been found.");
 
                 if(notVisitedChildren.Any())
                     nodes.Push(node);

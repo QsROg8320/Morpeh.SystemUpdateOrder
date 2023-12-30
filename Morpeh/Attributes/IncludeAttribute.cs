@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morpeh.Attributes
+namespace Scellecs.Morpeh.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class IncludeAttribute : Attribute
     {
         public IncludeAttribute() { }
     }
-
-
-
 }

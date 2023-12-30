@@ -1,4 +1,4 @@
-﻿namespace Morpeh.Utils
+﻿namespace Scellecs.Morpeh.Utils
 {
-    public enum State { NotVisited, Visited, Processed }
+    internal enum State { NotVisited, Visited, Processed }
 }

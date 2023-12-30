@@ -11,17 +11,17 @@ Copy the repository files to your project
  - Add SystemA and SystemB
 
 	```csharp
-	[UpdateBefore(typeof(BSystem))]
-	public class ASystem : UpdateSystem{
+	[UpdateBefore(typeof(SystemB))]
+	public class SystemA : UpdateSystem{
 
 	}
 
-	public class BSystem : UpdateSystem{
+	public class SystemB : UpdateSystem{
 
 	}
 	```
 
- - Right click in hierarchy window and select `ECS/InstallerV2`.
+ - Right click in hierarchy window and select `ECS/InstallerWithOrdering`.
 
 	> If  the checkbox `Include All Systems By Default` is checked, all
 	> systems in the assembly would be added to the list. If  the checkbox

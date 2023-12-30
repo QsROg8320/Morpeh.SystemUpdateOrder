@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morpeh.Utils
+namespace Scellecs.Morpeh.Utils
 {
 
-    public class Graph<T>
+    internal sealed class Graph<T>
     {
        
         private HashSet<Node<T>> _nodes = new HashSet<Node<T>>();

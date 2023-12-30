@@ -1,14 +1,15 @@
-﻿using Morpeh.Attributes;
-using Morpeh.Utils;
+﻿using Scellecs.Morpeh.Attributes;
+using Scellecs.Morpeh.Systems;
+using Scellecs.Morpeh.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Morpeh
+namespace Scellecs.Morpeh
 {
-    public static  class SystemHelper
+    internal static class SystemHelper
     {
         private struct SystemObject
         {
@@ -17,37 +18,34 @@ namespace Morpeh
                 Type = type;
                 Object = @object;
             }
-
             public Type Type {  get; private set; }
             public Object Object { get; private set; }
 
         }
         private struct SystemNode
         {
-            public SystemNode(Type type, Node<Object> node)
+            public SystemNode(Type type, Node<object> node)
             {
                 Type = type;
                 Node = node;
             }
             public Type Type { get; private set; }
-            public Node<Object> Node { get; private set; }
-
+            public Node<object> Node { get; private set; }
         }
 
-
-        public static IEnumerable<Object> GetSortedUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
+        public static IEnumerable<object> GetSortedUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
         {
             var classes = GetSystems<UpdateSystem>(includeAllByDefault);
             var systems = GenerateSystems(scriptableObjectPath, classes);
             return Sort(systems);
         }
-        public static IEnumerable<Object> GetSortedLateUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
+        public static IEnumerable<object> GetSortedLateUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
         {
             var classes = GetSystems<LateUpdateSystem>(includeAllByDefault);
             var systems = GenerateSystems(scriptableObjectPath, classes);
             return Sort(systems);
         }
-        public static IEnumerable<Object> GetSortedFixedUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
+        public static IEnumerable<object> GetSortedFixedUpdateSystems(string scriptableObjectPath, bool includeAllByDefault)
         {
             var classes = GetSystems<FixedUpdateSystem>(includeAllByDefault);
             var systems = GenerateSystems(scriptableObjectPath, classes);
@@ -73,11 +71,11 @@ namespace Morpeh
             }
             return systems;
         }
-        private static IEnumerable<Object> Sort(IEnumerable<SystemObject> systems)
+        private static IEnumerable<object> Sort(IEnumerable<SystemObject> systems)
         {
-            Graph<Object> graph = new Graph<Object>();
+            Graph<object> graph = new Graph<object>();
             var nodes = systems
-                .Select(x=>new SystemNode(x.Type,new Node<Object>(x.Object,State.NotVisited)))
+                .Select(x=>new SystemNode(x.Type,new Node<object>(x.Object,State.NotVisited)))
                 .ToList();
             var nodesDic = nodes.ToDictionary(x => x.Type, x => x.Node);
 
@@ -88,26 +86,26 @@ namespace Morpeh
 
             foreach(var node in nodes)
             {
-                var updateAfters = node.Type.GetCustomAttributes(
-                    typeof(UpdateAfterAttribute), true
-                ).OfType<UpdateAfterAttribute>();
-                foreach(var updateAfter in updateAfters)
+                var updateAfterNodes = node.Type.GetCustomAttributes(typeof(UpdateAfterAttribute), true)
+                    .OfType<UpdateAfterAttribute>();
+
+                foreach(var updateAfterNode in updateAfterNodes)
                 {
-                    if (!nodesDic.ContainsKey(updateAfter.Type))
-                        throw new Exception($"System {updateAfter.Type.Name} not found");
-                    graph.AddEdge(nodesDic[updateAfter.Type], node.Node);
+                    if (!nodesDic.ContainsKey(updateAfterNode.Type))
+                        throw new Exception($"System {updateAfterNode.Type.Name} not found");
+                    graph.AddEdge(nodesDic[updateAfterNode.Type], node.Node);
                 }
             }
             foreach (var node in nodes)
             {
-                var updateBefors = node.Type.GetCustomAttributes(
-                    typeof(UpdateBeforeAttribute), true
-                ).OfType < UpdateBeforeAttribute>();
-                foreach(var updateBefore in updateBefors)
+                var updateBeforeNodes = node.Type.GetCustomAttributes(typeof(UpdateBeforeAttribute), true)
+                    .OfType<UpdateBeforeAttribute>();
+
+                foreach(var updateBeforeNode in updateBeforeNodes)
                 {
-                    if (!nodesDic.ContainsKey(updateBefore.Type))
-                        throw new Exception($"System {updateBefore.Type.Name} not found");
-                    graph.AddEdge( node.Node, nodesDic[updateBefore.Type]);
+                    if (!nodesDic.ContainsKey(updateBeforeNode.Type))
+                        throw new Exception($"System {updateBeforeNode.Type.Name} not found");
+                    graph.AddEdge(node.Node, nodesDic[updateBeforeNode.Type]);
                 }
             }
             return TopologicalSorter.Sort(graph);

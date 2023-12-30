@@ -1,6 +1,6 @@
-﻿namespace Morpeh.Utils
+﻿namespace Scellecs.Morpeh.Utils
 {
-    public class Node<T> 
+    internal sealed class Node<T> 
     {
         public T Value { get;  set; }
         public State State { get;  set; }

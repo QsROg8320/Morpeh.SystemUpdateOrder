@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace Morpeh.Utils
+namespace Scellecs.Morpeh.Utils
 {
-    public class AssetHelper
+    internal sealed class AssetHelper
     {
-
         public static T CreateAsset<T>(string path) where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>();
@@ -29,9 +28,7 @@ namespace Morpeh.Utils
             UnityEngine.Object asset = ScriptableObject.CreateInstance(t);
 
             AssetDatabase.CreateAsset(asset, Path.Combine(path, $"{t.Name}.asset"));
-            AssetDatabase.SaveAssets();
-
-            EditorUtility.FocusProjectWindow();
+            AssetDatabase.SaveAssets();            
 
             Selection.activeObject = asset;
             return asset;

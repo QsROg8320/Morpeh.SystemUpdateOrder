@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Morpeh.Attributes
+namespace Scellecs.Morpeh.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class UpdateAfterAttribute : Attribute
@@ -8,5 +8,4 @@ namespace Morpeh.Attributes
         public Type Type { get; private set; }
         public UpdateAfterAttribute(Type type) { Type = type; }
     }
-
 }

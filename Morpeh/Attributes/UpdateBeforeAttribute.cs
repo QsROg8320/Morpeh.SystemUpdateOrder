@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Morpeh.Attributes
+namespace Scellecs.Morpeh.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class UpdateBeforeAttribute : Attribute
